@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <title>Facility Manager - Version 1.0</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.css">
+    <link rel="stylesheet" href="assets/app.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style type="text/css">
+        /**
+         * Hide when Angular is not yet loaded and initialized
+         */
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+          display: none !important;
+        }
+    </style>
+
+  </head>
+
+  <body ng-app="starterApp" layout="row" ng-controller="UserController as ul" ng-cloak >
+
+  <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2"
+      md-component-id="left"
+      ng-click="ul.toggleList()" aria-label="Show Menu"
+      md-is-locked-open="$mdMedia('gt-md')">
+
+    <md-toolbar class="md-whiteframe-z1 md-tall md-hue-2">
+      <span flex></span>
+        <div layout="column" class="md-toolbar-tools-bottom inset">
+          <user-avatar><i class="material-icons md-48">account_circle</i></user-avatar>
+          <div>Firstname Lastname</div>
+          <div>email@domainname.com</div>
+      </div>
+    </md-toolbar>
+
+    <md-list>
+      <md-list-item ng-repeat="it in ul.users">
+        <a ng-click="ul.selectUser(it)" ng-class="{'selected' : it === ul.selected }">
+        <md-item-content md-ink-ripple layout="row" layout-align="start center">
+            <div class="inset">
+              <ng-md-icon icon="{{it.icon}}"></ng-md-icon>
+            </div>
+            <div class="inset">{{it.name}}
+            </div>
+          </md-item-content>
+        </a>
+      </md-list-item>
+      <!--
+          <md-list-item>
+            <a>
+            <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                <div class="inset">
+                  <ng-md-icon icon="dashboard"></ng-md-icon>
+                </div>
+                <div class="inset">Dashboard
+                </div>
+              </md-item-content>
+            </a>
+          </md-list-item>
+          <md-list-item>
+            <a>
+              <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                <div class="inset">
+                  <ng-md-icon icon="assessment"></ng-md-icon>
+                </div>
+                <div class="inset">Projects
+                </div>
+              </md-item-content>
+            </a>
+          </md-list-item>
+          <md-divider></md-divider>
+          <md-subheader>Administrator</md-subheader>
+          <md-list-item>
+            <a>
+              <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                <div class="inset">
+                  <ng-md-icon icon="supervisor_account"></ng-md-icon>
+                </div>
+                <div class="inset">Users
+                </div>
+              </md-item-content>
+            </a>
+          </md-list-item>
+          <md-list-item>
+            <a>
+              <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                <div class="inset">
+                  <ng-md-icon icon="settings"></ng-md-icon>
+                </div>
+                <div class="inset">Settings
+                </div>
+              </md-item-content>
+            </a>
+          </md-list-item>
+        -->
+
+        </md-list>
+
+
+  </md-sidenav>
+
+
+  <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
+
+    <md-toolbar layout="row" class="md-whiteframe-z1">
+      <md-button id="main" class="menu" hide-gt-md ng-click="ul.toggleList()" aria-label="Show User List">
+        <md-icon md-svg-icon="menu" ></md-icon>
+      </md-button>
+      <h3>Facility Manager Version 1.0</h3>
+    </md-toolbar>
+
+    <md-content flex id="content">
+        <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
+          <ng-md-icon icon="add"></ng-md-icon>
+        </md-button>
+        <h2>{{ul.selected.name}}</h2>
+        <p>{{ul.selected.content}}</p>
+
+        <!--
+        <md-button class="contact" md-no-ink ng-click="ul.makeContact(ul.selected)" aria-label="Share with {{ ul.selected.name }}">
+          <md-tooltip>Contact {{ ul.selected.name }}</md-tooltip>
+          <md-icon md-svg-icon="share"></md-icon>
+        </md-button>
+        -->
+
+      </md-content>
+
+  </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-aria.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.js"></script>
+    <script src="//cdn.jsdelivr.net/angular-material-icons/0.4.0/angular-material-icons.min.js"></script>
+
+    <script src="./src/users/Users.js"></script>
+    <script src="./src/users/UserController.js"></script>
+    <script src="./src/users/UserService.js"></script>
+
+    <script type="text/javascript">
+
+          angular
+              .module('starterApp', ['ngMaterial', 'users', 'ngMdIcons'])
+              .config(function($mdThemingProvider, $mdIconProvider){
+
+                  $mdIconProvider
+                      .defaultIconSet("./assets/svg/avatars.svg", 128)
+                      .icon("menu"       , "./assets/svg/menu.svg"        , 24)
+                      .icon("share"      , "./assets/svg/share.svg"       , 24)
+                      .icon("google_plus", "./assets/svg/google_plus.svg" , 512)
+                      .icon("hangouts"   , "./assets/svg/hangouts.svg"    , 512)
+                      .icon("twitter"    , "./assets/svg/twitter.svg"     , 512)
+                      .icon("phone"      , "./assets/svg/phone.svg"       , 512);
+
+                      var customBlueMap = 		$mdThemingProvider.extendPalette('light-blue', {
+                    'contrastDefaultColor': 'light',
+                    'contrastDarkColors': ['50'],
+                    '50': 'ffffff'
+                  });
+                  $mdThemingProvider.definePalette('customBlue', customBlueMap);
+                  $mdThemingProvider.theme('default')
+                    .primaryPalette('customBlue', {
+                      'default': '500',
+                      'hue-1': '50'
+                    })
+                    .accentPalette('pink');
+                  $mdThemingProvider.theme('input', 'default')
+                        .primaryPalette('grey')
+                });
+
+    </script>
+
+  </body>
+</html>
